@@ -62,7 +62,7 @@ def degrees(grafo, node = 'All'):
         lista= grafo.degree(node)
     return lista
 
-def applyPlotStyle():
-    plt.xlabel('k',weight='bold',fontsize=11)
-    plt.ylabel(r'p$_k$',weight='bold',fontsize=11)
+def applyPlotStyle(xname,yname):
+    plt.xlabel(xname,weight='bold',fontsize=11)
+    plt.ylabel(yname,weight='bold',fontsize=11)
     plt.grid(linestyle=':')

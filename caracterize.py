@@ -11,7 +11,7 @@ import numpy as np
 import igraph as ig
 #%%
 
-userG = ig.read('Grafos/userG.gml')
+userG = ig.read('C:/Users/noelp/Documents/Git/Redes-TPFinal-Grafos/userG.gml')
 
 red = userG
 #%%
@@ -37,8 +37,8 @@ pk=np.array(list(K.values()))/N
 
 
 n=14
-bins=np.logspace(0,np.log10(kmax+1),n)
-h,bins=np.histogram(listk,bins)
+#bins=np.logspace(0,np.log10(kmax+1),n)
+h,bins=np.histogram(listk, bins=n)
 centros=[]
 for i in range(len(bins)-1):
     c=(bins[i]+bins[i+1])/2
@@ -50,18 +50,18 @@ for i in range(len(h)):
 pk_log=A/sum(A)
 
 
-plt.loglog(k,pk,'.',color='0.9')
-plt.loglog(centros,pk_log,'.')
-applyPlotStyle()
+plt.loglog(k,pk,'.')
+#plt.loglog(centros,pk_log,'.')
+applyPlotStyle('degree','densidad')
 plt.show()
 
 #%% Calculo valores de la tabla
 
 
 nodes=[]; edges=[]; kmedio=[]; kmax=[]; kmin=[]; densidad=[]
-#clustl=[]; clustg=[]; ; diam=[];
+clustg=[]; weight = []
 
-
+weights=[red.es[n]['weight'] for n in range(red.ecount())]
 
 nodes.append(red.vcount())
 edges.append(red.ecount())
@@ -69,11 +69,9 @@ k=red.degree()
 kmedio.append(np.mean(k))
 kmax.append(max(k))
 kmin.append(min(k))
-#densidad.append(edges/(nodes*(nodes-1)/2))
-#compgigante=max(nx.connected_component_subgraphs(red),key=len)
-#diam.append(nx.diameter(compgigante))
-#clustl.append(nx.average_clustering(red))
-#clustg.append(nx.transitivity(red))
+densidad.append(red.ecount()/(red.vcount()*(red.vcount()-1)/2))
+#clustg.append(red.transitivity_avglocal_undirected(weights=weights))
+weight.append(np.average(weights))
     
 
     
