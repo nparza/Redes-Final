@@ -54,10 +54,9 @@ distribucion = red.degree()
 
 k,pk,centros,pk_log = logdist(red.degree(), red.vcount())
 
-
 plt.loglog(k,pk,'.')
 plt.loglog(centros,pk_log,'.')
-applyPlotStyle('degree','densidad')
+applyPlotStyle('degree','densidad') ##Acá le ponés el nombre a la etiqueta
 plt.show()
 
 
