@@ -5,13 +5,6 @@ Created on Fri Nov  9 15:07:54 2018
 @author: noelp
 """
 
-from func import *
-from matplotlib import pyplot as plt
-import numpy as np
-import igraph as ig
-
-
-
 '''
 Descomentá el subgrafo que queres caracterizar y tamo
 
@@ -20,20 +13,26 @@ Descomentá el subgrafo que queres caracterizar y tamo
 '''
 
 
+from func import *
+from matplotlib import pyplot as plt
+import numpy as np
+import igraph as ig
+
+
 #%% 
 '''
 Grafo principal
 '''
 
-#userG = ig.read('C:/Users/noelp/Documents/Git/Redes-TPFinal-Grafos/userG.gml')
-#red = userG
+#userGig = ig.read('C:/Users/noelp/Documents/Git/Redes-TPFinal-Grafos/userG.gml')
+#red = userGig
 #%%
 '''
 Nodos que watchean +70 repos en simultáneo
 '''
 
-#userSG= ig.read('userSubG.gml')
-#red = userSG
+#userSGig= ig.read('userSubG.gml')
+#red = userSGig
 
 #%%%
 '''
