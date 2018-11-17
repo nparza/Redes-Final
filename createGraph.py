@@ -5,8 +5,11 @@ Created on Tue Nov 13 11:37:02 2018
 @author: noelp
 """
 
-import networkx as nx
+
 import pandas as pd
+
+#%%
+main = pd.read_csv('data/data.txt', delimiter=':')
 
 #%%
 '''
@@ -15,8 +18,7 @@ Enlaces: repositorio watcheado por el par de nodos
 Peso: cantidad de repositorios watcheados por el par de nodos
 '''
 
-main = pd.read_csv('data/data.txt', delimiter=':')
-
+import networkx as nx
 userG = nx.Graph()
 
 for r in pd.unique(main['repo']):
@@ -30,9 +32,9 @@ for r in pd.unique(main['repo']):
                 else:
                     userG[i][j]['weight'] +=1
             
-                
-                   
 nx.write_gml(userG, 'userG.gml.gz', stringizer=None)
+
+
 
 
 

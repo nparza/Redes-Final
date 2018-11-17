@@ -7,6 +7,7 @@ Created on Tue Nov 13 11:12:31 2018
 
 import igraph as igraph
 from matplotlib import pyplot as plt
+import networkx as nx
 
 def clusterize(nx_Graph, method="infomap"):
     """
@@ -66,3 +67,39 @@ def applyPlotStyle(xname,yname):
     plt.xlabel(xname,weight='bold',fontsize=11)
     plt.ylabel(yname,weight='bold',fontsize=11)
     plt.grid(linestyle=':')
+    
+    
+def logdist(lista, N):
+    ''''
+    lista: elementos de la distribución
+    N: Normalización
+    ''''
+    kmax=max(lista)
+    
+    
+    K=dict()
+    
+    for i in set(lista):
+        K[i]=0
+    
+    for k in lista:
+        K[k]+=1
+    
+    k=list(K.keys())    
+    pk=np.array(list(K.values()))/N
+    
+    
+    n=14
+    bins=np.logspace(0,np.log10(kmax+1),n)
+    h,bins=np.histogram(lista, bins=n)
+    centros=[]
+    for i in range(len(bins)-1):
+        c=(bins[i]+bins[i+1])/2
+        centros.append(c)
+    
+    A=[]
+    for i in range(len(h)):
+        A.append(h[i]/(bins[i+1]-bins[i]))
+    pk_log=A/sum(A)
+    
+    return k, pk, centros, pk_log
