@@ -1,5 +1,6 @@
 # Redes-TPFinal
 
+Qué cosas tiene el wacho.
 
 - _createGraphnx.py_ crea el grafo principal en networkx
 - _subGraph_igraph.py_ crea un subgrafo a partir del principal
