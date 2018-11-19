@@ -18,9 +18,6 @@ Enlaces: repositorio watcheado por el par de nodos
 Peso: cantidad de repositorios watcheados por el par de nodos
 '''
 
-import networkx as nx
-userG = nx.Graph()
-
 for r in pd.unique(main['repo']):
     matches = main['user'].loc[main['repo']==r]
     userG.add_nodes_from(matches)

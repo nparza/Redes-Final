@@ -24,7 +24,7 @@ import igraph as ig
 Grafo principal
 '''
 
-#userGig = ig.read('C:/Users/noelp/Documents/Git/Redes-TPFinal-Grafos/userG.gml')
+userGig = ig.read('C:/Users/noelp/Documents/Git/Redes-TPFinal-Grafos/userG.gml')
 #red = userGig
 #%%
 '''
