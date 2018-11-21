@@ -70,10 +70,10 @@ def applyPlotStyle(xname,yname):
     
     
 def logdist(lista, N):
-    ''''
+    '''
     lista: elementos de la distribución
     N: Normalización
-    ''''
+    '''
     kmax=max(lista)
     
     
