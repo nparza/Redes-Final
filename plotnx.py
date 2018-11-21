@@ -1,24 +1,19 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov 16 10:32:34 2018
-
-@author: noelp
-"""
 
 '''
 Ploteo en networkx de un grafo pesado. 
 No usar para la red grande porque networkx es re pichi
 '''
 
-
 import networkx as nx
 from matplotlib import pyplot as plt
 from func import *
 import numpy as np
+
 #%%
 
 userSGnx = nx.read_gml('userSubG.gml')
 red = userSGnx
+
 #%%
 
 pos=nx.spring_layout(red) 
