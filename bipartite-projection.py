@@ -1,10 +1,15 @@
 
 '''
-MATRIX DE ADYACENCIA RED BIPARTITA
+CALCULO MATRIZ DE ADYACENCIA RED BIPARTITA
 Correr mapeo.py si quiero correr esta celda
 A continuación creo las listas para la matriz esparsa de la red bipartita
 Asumimos que la lista data es [1,1,..,1]
 
+'''
+
+'''
+Estas dos listas ya están guardadas en bipartite.csv
+Para cargarlas usar loadcsv.py
 '''
 
 # índices de los usuarios
@@ -22,10 +27,6 @@ for i in range(main.iloc[-1].name + 1):
     
     fila.append(usrindex); col.append(repoindex);
     
-'''
-Estas dos listas ya están guardadas en bipartite.csv
-Para cargarlas usar loadcsv.py
-'''
 
 #%%
 
@@ -37,12 +38,16 @@ from scipy.sparse import csr_matrix
  
 #%% 
 
-## FUNCIONES
+''' 
+BIPARTITE NETWORK PROJETION 
+funciones que tuve que definir para correr weightmatrix() y armar la 
+matriz de la proyección sobre un tipo de nodos
+'''
 
 def position(elem, type1, start=0):
     
     '''
-    asumo que fila está ordenada de menor a mayor
+    asumo que type1 está ordenada de menor a mayor
     '''
     
     # encuentro la posición del primer elemento
@@ -59,10 +64,11 @@ def position(elem, type1, start=0):
     return inicio, final
 
 
-def obtainrepo(inicio, final, type2):
+def obtain(inicio, final, type2):
     
     '''
-    devuelve lista de repos con índicies entre inicio y final incluidos
+    devuelve lista con elemenentos de type2 con índicies entre 
+    inicio y final incluidos
     '''
     
     return type2[inicio:final+1]
@@ -78,22 +84,32 @@ def coincidence(l1, l2):
     return comun
 
 
-#%% 
-
-def degreetype2(type2):
+def degreetype(ty):
     
-    ty2degree = dict()
-    sort = sorted(type2)
+    '''
+    devuelve diccionario con elemento (key) y su respectivo grado (value)
+    en la red bipartita
+    '''
+    
+    tydegree = dict()
+    sort = sorted(ty)
     final = 0
 
-    for rep in set(type2):
-        inicio, final = position(rep,sort,start=final)
-        ty2degree[rep] = final - inicio + 1
+    for elem in set(ty):
+        inicio, final = position(elem,sort,start=final)
+        tydegree[elem] = final - inicio + 1
     
-    return ty2degree
+    return tydegree
 
 
-def weightmatrix(type1, type2):
+#%% 
+
+'''
+FUNCIÓN PRINCIPAL PARA CALCULAR LA MATRIZ DE PESOS DE LA PROYECCIÓN
+'''
+
+
+def weightmatrix(type1, type2, ty2degree):
     
     '''
     los elementos de type1 son del espacio a donde quiero hacer la 
@@ -102,6 +118,7 @@ def weightmatrix(type1, type2):
     type1 debe estar ordenada de menor a mayor
     type2 está ordenada según type1
     '''
+    
     t0 = dt.now()
     peso = list()
     ufila = list()
@@ -112,13 +129,13 @@ def weightmatrix(type1, type2):
         
         print('i: ', i); print(dt.now()-t0)
         ii, fi = position(i, type1, start=fi)
-        wi = obtainrepo(ii, fi, type2)
+        wi = obtain(ii, fi, type2)
         
         fj = 0
         for j in set(type1):
            
             ij, fj = position(j, type1, start=fj)
-            wj = obtainrepo(ij, fj, type2)
+            wj = obtain(ij, fj, type2)
             comun = coincidence(wi, wj)
             
             if len(comun) != 0:
@@ -134,7 +151,10 @@ def weightmatrix(type1, type2):
     
 #%% 
     
-'''PRUEBA'''
+'''
+PRUEBA
+todo arranca con 't' de test
+'''
 
 ##  listas para bipartita
 
@@ -147,19 +167,26 @@ tbip = csr_matrix((tdata, (tfila, tcol)), shape=(max(tfila)+1, max(tcol)+1))
 
 ## Armo diccionario con repo y su respectivo grado
     
-ty2degree = degreetype2(tcol)
+ty2degree = degreetype(tcol)
 
 ## ARMO MATRIZ DE PESOS PARA USUARIOS
 
-peso, ufila, ucol = weightmatrix(tfila, tcol)
+tpeso, tufila, tucol = weightmatrix(tfila, tcol, ty2degree)
 
-wij = csr_matrix((peso, (ufila, ucol)), shape=(max(ufila)+1, max(ucol)+1))
+wij = csr_matrix((tpeso, (tufila, tucol)), shape=(max(tufila)+1, max(tucol)+1))
+
+
+print('MATRIZ BIPARTITA') 
+print(tbip.toarray())
+
+print('MATRIZ DE PESOS CON PROYECCIÓN EN LOS ELEM. DE LA FILA')
+print(wij.toarray())
 
 
 #%%
 
 '''
-MATRIZ BIPARTITA
+MATRIZ BIPARTITA DE USUARIOS Y REPOS
 cargar las listas fila y col con loadcsv.py
 crear la matriz esparza bipartita
 '''
@@ -183,17 +210,26 @@ col = list(csort); del csort
 #%%        
 
 '''
-CALCULO MATRIZ PESOS ENTRE USUARIOS
-tardó 9 horas en correr aprox
+CALCULO MATRIZ PESOS 
+
+ENTRE USUARIOS: tardó 5 horas en correr aprox
+fila corresponde a los índices de los usuarios y 
+col a los ínidices de los repos
+
+ENTRE REPOS: aún no corrió
+fila corresponde a los índices de los repos y 
+col a los ínidices de los usuarios
+
+OBS: la celda de sorteo de fila debe estar corrida!
 '''
 
 ## Armo diccionario con repo y su respectivo grado
     
-ty2degree = degreetype2(col)
+ty2degree = degreetype(col)
 
 ## ARMO MATRIZ DE PESOS PARA USUARIOS
 
-peso, ufila, ucol = weightmatrix(fila, col)
+peso, ufila, ucol = weightmatrix(fila, col, ty2degree)
 
 
 #%%
@@ -208,6 +244,3 @@ wij = csr_matrix((peso, (ufila, ucol)), shape=(max(ufila)+1, max(ucol)+1))
         
         
         
-    
-    
-    
