@@ -1,7 +1,6 @@
 ## LIBRERIAS
 
 import pandas as pd
-from datetime import datetime as dt
 
 ## CARGO EL MAIN TXT
 

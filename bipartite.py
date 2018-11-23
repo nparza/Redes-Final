@@ -1,7 +1,7 @@
 
 '''
 MATRIX DE ADYACENCIA RED BIPARTITA
-Correr mapeo.py
+Correr mapeo.py si quiero correr esta celda
 A continuación creo las listas para la matriz esparsa de la red bipartita
 Asumimos que la lista data es [1,1,..,1]
 
@@ -26,30 +26,18 @@ for i in range(main.iloc[-1].name + 1):
 Estas dos listas ya están guardadas en bipartite.csv
 Para cargarlas usar loadcsv.py
 '''
- 
+
 #%%
 
-## Creo la matriz esparza
+## LIBRERIAS
 
+from datetime import datetime as dt
 from scipy.sparse import csr_matrix
 
-data = [1]*len(fila)
+ 
+#%% 
 
-bip = csr_matrix((data, (fila, col)), shape=(len(ui), len(ri)))
-
-
-#%%
-
-## Sorteo de menor a mayor la lista fila
-## Col se sortea según fila
-
-fsort, csort = zip(*sorted(zip(fila, col)))
-
-fila = list(fsort); del fsort
-col = list(csort); del csort
-
-
-#%% FUNCIONES
+## FUNCIONES
 
 def position(elem, type1, start=0):
     
@@ -148,11 +136,13 @@ def weightmatrix(type1, type2):
     
 '''PRUEBA'''
 
+##  listas para bipartita
+
 tfila = [0,1,2,3,4,5,5,5,5,5,6,6]
 tcol = [0,1,2,3,4,0,1,2,3,4,3,4]
 tdata = [1]*len(tfila)
 
-test = csr_matrix((tdata, (tfila, tcol)), shape=(max(tfila)+1, max(tcol)+1))
+tbip = csr_matrix((tdata, (tfila, tcol)), shape=(max(tfila)+1, max(tcol)+1))
 
 
 ## Armo diccionario con repo y su respectivo grado
@@ -166,10 +156,35 @@ peso, ufila, ucol = weightmatrix(tfila, tcol)
 wij = csr_matrix((peso, (ufila, ucol)), shape=(max(ufila)+1, max(ucol)+1))
 
 
+#%%
+
+'''
+MATRIZ BIPARTITA
+cargar las listas fila y col con loadcsv.py
+crear la matriz esparza bipartita
+'''
+
+data = [1]*len(fila)
+
+bip = csr_matrix((data, (fila, col)), shape=(max(fila)+1, max(col)+1))
+
+
+#%%
+
+## Sorteo de menor a mayor la lista fila
+## Col se sortea según fila
+
+fsort, csort = zip(*sorted(zip(fila, col)))
+
+fila = list(fsort); del fsort
+col = list(csort); del csort
+
+
 #%%        
 
 '''
-REAL
+CALCULO MATRIZ PESOS ENTRE USUARIOS
+tardó 9 horas en correr aprox
 '''
 
 ## Armo diccionario con repo y su respectivo grado
@@ -180,6 +195,14 @@ ty2degree = degreetype2(col)
 
 peso, ufila, ucol = weightmatrix(fila, col)
 
+
+#%%
+
+'''
+CARGO MATRIZ PESOS
+cargar pesos, ufila, ucol con loadcsv.py
+'''
+
 wij = csr_matrix((peso, (ufila, ucol)), shape=(max(ufila)+1, max(ucol)+1))
         
         
@@ -188,27 +211,3 @@ wij = csr_matrix((peso, (ufila, ucol)), shape=(max(ufila)+1, max(ucol)+1))
     
     
     
-    
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

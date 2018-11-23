@@ -5,9 +5,10 @@ def list2csvrow(l):
     return row
     
 
-f = open('bipartite.csv', 'w')
-print('filas,' + '%s' % list2csvrow(fila), file=f)
-print('cols,' + '%s' % list2csvrow(col), file=f)
+f = open('weights-repo.csv', 'w')
+print('peso,' + '%s' % list2csvrow(peso), file=f)
+print('fila,' + '%s' % list2csvrow(ufila), file=f)
+print('col,' + '%s' % list2csvrow(ucol), file=f)
 f.close()
 
 del f
