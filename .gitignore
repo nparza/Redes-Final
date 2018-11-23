@@ -1,6 +1,5 @@
+bipartite.csv
+weights-user.csv
 .ipynb_checkpoints
 .DS_Store
-userSubG.gml
-userG.gml.gz
-userG.gml
 __pycache__
