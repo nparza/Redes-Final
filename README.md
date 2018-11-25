@@ -16,6 +16,8 @@
 
 ### Grafos
 
+#### python-igraph
+
 - _create-graph.py_ crea el grafo de usuarios y repos.
 
 - _test-graph.py_ crea el grafo de prueba generado en  _bipartite-projection.py_.
@@ -29,8 +31,7 @@
 
 #### networkx
 
-- _create-graph-nx.py_ crea grafo en networkx.
-
+- _create-graph-nx.py_ crea o carga grafo en networkx.
 - _plot-nx.py_ plotea un grafo en networkx.
 
 
