@@ -5,8 +5,10 @@
 ### Base
 
 - _info.ipynb_ jupyter notebook con información útil, cosas que queremos correr una sola vez y tener a mano.
+
 - _loadcsv.py_, _savecsv.py_ lo que su nombre indica.
-- _mapeo.py_ tiene las funciones para mapear los ID de repos y usuarios a los índices matriciales con los que los vamos a referenciar y viceversa. También crea la matriz bipartita en formato esparza.
+
+- _mapeo.py_ tiene las funciones para mapear los ID de repos y usuarios a los índices matriciales con los que los vamos a trabajar y viceversa. También crea la matriz bipartita en formato esparza.
 
 
 ### Matriz de pesos
