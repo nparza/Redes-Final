@@ -18,7 +18,7 @@
 
 #### python-igraph
 
-- _create-graph.py_ crea el grafo de usuarios y repos.
+- _create-graph.py_ crea el grafo de usuarios y repos. Lo guarda como `.gml`
 
 - _test-graph.py_ crea el grafo de prueba generado en  _bipartite-projection.py_.
 
