@@ -27,11 +27,13 @@
 - _caract-graph.py_ caracterización general de los grafos.
 
 - _func-old.py_ funciones de otros TPs.
+
 - _func-igraph.py_ funciones para aplicar a grafos de igraph.
 
 #### networkx
 
 - _create-graph-nx.py_ crea o carga grafo en networkx.
+
 - _plot-nx.py_ plotea un grafo en networkx.
 
 
