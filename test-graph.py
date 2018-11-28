@@ -11,14 +11,15 @@ correr la celda 'PRUEBA' de bipartite-projection.py
 
 '''
 DIRIGIDO
+filas: targets, columnas: sources, por cómo calculamos la matriz pesos
 '''
 
-sources, targets = wij.nonzero()
+targets, sources = wij.nonzero()
 edgelist = list(zip(sources.tolist(), targets.tolist()))
 
 node_names = ['one', 'two', 'three', 'four', 'five', 'six', 'seven']
 
-g = ig.Graph(edgelist, directed=True, 
+tg = ig.Graph(edgelist, directed=True, 
              edge_attrs={'weight': wij.data.tolist()},
              vertex_attrs={'label': node_names})
 
@@ -28,13 +29,14 @@ g = ig.Graph(edgelist, directed=True,
 NO DIRIGIDO - PESO PROMEDIO
 '''
 
-g2 = g.copy()
-g2.to_undirected(mode='collapse', combine_edges='mean')
+tg2 = tg.copy()
+tg2.to_undirected(mode='collapse', combine_edges='mean')
+rmloops(tg2)
 
 
 #%%
 
-def plot(graph, filename='prueba.png', layout='circular'):
+def plot(graph, filename='test.png', layout='circular'):
     layout = graph.layout(layout)
     visual_style = dict()
     visual_style['vertex_size'] = 20
@@ -47,20 +49,32 @@ def plot(graph, filename='prueba.png', layout='circular'):
     visual_style['layout'] = layout
     visual_style['bbox'] = (1200, 1000)
     visual_style['margin'] = 100
+    visual_style['edge_width'] = [10*float(w) \
+                for w in graph.es['weight']]
     ig.plot(graph, filename, **visual_style) 
 
-plot(g2)
+plot(tg)
 
-#%%
+#%% EDGES
 
 print('NO DIRIGIDO')
-for idx, e in enumerate(g2.es):
+for idx, e in enumerate(tg2.es):
     print(idx, e.tuple, e['weight'])   
 
 print('DIRIGIDO')    
-for idx, e in enumerate(g.es):
+for idx, e in enumerate(tg.es):
     print(idx, e.tuple, e['weight'])      
     
+
+#%% VERTEX
+
+print('NO DIRIGIDO')
+for idx, v in enumerate(tg2.vs):
+    print(idx, v.index, v['label'])   
+
+print('DIRIGIDO')    
+for idx, v in enumerate(tg.vs):
+    print(idx, v.index, v['label'])      
 
 #%%
 

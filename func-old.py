@@ -69,15 +69,17 @@ def applyPlotStyle(xname,yname):
     plt.grid(linestyle=':')
     
     
-def logdist(lista, N):
+def logdist(lista, N, n=14, w=False):
+    
     '''
     lista: elementos de la distribución
-    N: Normalización
+    N: normalización
     '''
-    kmax=max(lista)
     
+    kmax = max(lista)
+    kmin = min(lista)
     
-    K=dict()
+    K = dict()
     
     for i in set(lista):
         K[i]=0
@@ -85,13 +87,15 @@ def logdist(lista, N):
     for k in lista:
         K[k]+=1
     
-    k=list(K.keys())    
-    pk=np.array(list(K.values()))/N
+    k = list(K.keys())    
+    pk = np.array(list(K.values()))/N
     
+    if w:
+        Bins = np.logspace(np.log10(kmin),np.log10(kmax+1),n)
+    else:
+        Bins = np.logspace(0,np.log10(kmax+1),n)
     
-    n=14
-    bins=np.logspace(0,np.log10(kmax+1),n)
-    h,bins=np.histogram(lista, bins=n)
+    h,bins=np.histogram(lista, Bins)
     centros=[]
     for i in range(len(bins)-1):
         c=(bins[i]+bins[i+1])/2
@@ -102,4 +106,4 @@ def logdist(lista, N):
         A.append(h[i]/(bins[i+1]-bins[i]))
     pk_log=A/sum(A)
     
-    return k, pk, centros, pk_log
+    return k, pk, centros, pk_log, sum(A)

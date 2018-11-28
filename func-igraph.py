@@ -1,16 +1,20 @@
 
 ## PARA IGRAPH
 
+def timear(t0, texto):
+    
+    print(texto + ' ', dt.now()-t0)
+
+
 def rmloops(g):
     
-    '''
-    asume que todos los nodos tienen self-loop
-    '''
+    index = list()
+    for idx, e in enumerate(g.es):
+        if g.is_loop(e) == True:
+            index.append(idx)
+    g.delete_edges(index)
     
-    loops = list()
-    for i in range(g.vcount()):
-        loops.append((i,i))  
-        g.delete_edges(loops)
+    
 
 
 

@@ -31,7 +31,7 @@ del i
 CARGAR FILAS Y COLUMNAS DE LA MATRIZ ESPARSA DE PESOS 
 '''
 
-entrada = open('weights-repo.csv')
+entrada = open('weights-user.csv')
 
 lines = []
 
@@ -45,7 +45,7 @@ for line in lines[1:]:
     for i in range(1,len(line)):
         line[i] = int(line[i])
 
-peso = lines[0][1:]
+upeso = lines[0][1:]
 ufila = lines[1][1:]
 ucol = lines[2][1:]
 

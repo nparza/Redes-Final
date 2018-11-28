@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov  9 15:07:54 2018
-
-@author: noelp
-"""
 
 '''
 Descomentá el subgrafo que queres caracterizar y tamo
@@ -13,50 +7,77 @@ Descomentá el subgrafo que queres caracterizar y tamo
 '''
 
 
-from func import *
 from matplotlib import pyplot as plt
 import numpy as np
 import igraph as ig
 
-
 #%% 
+
 '''
-Grafo principal
+CARGO GRAFO PRINCIPAL USERS
+ugd: users directed graph
+ug: users graph
 '''
 
-userGig = ig.read('C:/Users/noelp/Documents/Git/Redes-TPFinal-Grafos/userG.gml')
-#red = userGig
+ug = ig.read('users-undirected.gml')
+udg = ig.read('users-directed.gml')
+
 #%%
+
 '''
-Nodos que watchean +70 repos en simultáneo
+CARGO GRAFO PRINCIPAL REPOS
+ugd: users directed graph
+ug: users graph
 '''
 
-#userSGig= ig.read('userSubG.gml')
-#red = userSGig
+rg = ig.read('repos-undirected.gml')
+rdg = ig.read('repos-directed.gml')
+
+#%%
+
+red = rg
+dred = rdg
+
+#%%
+
+## EDGES
+
+idxi = 100
+idxf = 107
+
+print('NO DIRIGIDO')
+for idx, e in enumerate(red.es[idxi:idxf]):
+    print(idx+idxi, e.tuple, e['weight'])   
+
+print('DIRIGIDO')    
+for idx, e in enumerate(dred.es[idxi:idxf]):
+    print(idx+idxi, e.tuple, e['weight'])   
 
 #%%%
 '''
-Algunas chanchadas que quizá necesites
+COEFICIENTES Y GRADO
+no dirigida
 '''
 
 deg = red.degree()
-weights=[red.es[n]['weight'] for n in range(red.ecount())]
+weights = [red.es[n]['weight'] for n in range(red.ecount())]
 densidad = red.ecount()/(red.vcount()*(red.vcount()-1)/2)
 clustg = red.transitivity_avglocal_undirected(weights=weights)
 
 #%%
 '''
 Distribución logarítmica de grado o peso del grafo
+no dirigida
 '''
 
-distribucion = red.degree()
-#distribución = weights
+k,pk,centros,pk_log, sumA = logdist(red.degree(), red.vcount(), n=90)
 
-k,pk,centros,pk_log = logdist(red.degree(), red.vcount())
-
-plt.loglog(k,pk,'.')
+plt.figure(2)
+plt.title('Log-Log Scale, Log Binning',loc='left',fontsize=10)
+plt.loglog(k,pk,'.',color='0.9')
 plt.loglog(centros,pk_log,'.')
-applyPlotStyle('degree','densidad') ##Acá le ponés el nombre a la etiqueta
+applyPlotStyle('k',r'p$_k$') 
+#applyPlotStyle('w',r'p$_w$')
 plt.show()
 
 
