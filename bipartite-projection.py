@@ -185,7 +185,7 @@ ENTRE USUARIOS: tardó 5 horas en correr aprox
 fila corresponde a los índices de los usuarios y 
 col a los ínidices de los repos
 
-ENTRE REPOS: aún no corrió
+ENTRE REPOS: ya corrió en 12 horas je
 fila corresponde a los índices de los repos y 
 col a los ínidices de los usuarios
 
