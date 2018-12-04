@@ -1,7 +1,7 @@
-test.gml
+*.gml
 weights_igraph.py
-bipartite.csv
-weights-user.csv
+*.csv
+*.png
 .ipynb_checkpoints
 .DS_Store
 __pycache__
