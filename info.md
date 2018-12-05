@@ -17,3 +17,8 @@
 
 #### Características estructurales
 
+**Nodos**: 120867 **Edges**: 22116362
+**k medio**: 365.9619581854435 **kmax**: 59298 kmin: 0
+**Densidad**: 0.0030278321296761993
+**Average weight**: 0.004225333808870526
+
