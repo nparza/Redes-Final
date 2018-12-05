@@ -53,3 +53,22 @@ del line
 del lines
 del entrada
 del i
+
+#%%
+
+'''
+CARGAR MEMBERSHIP DEL CLUSTERING
+'''
+
+entrada = open('cluster-infomap-repos-directed.csv')
+
+for line in entrada:
+    line = line.split(',')
+for i in range(len(line)):
+    line[i] = int(line[i])
+    
+membership = line   
+
+del i, entrada, line
+
+
