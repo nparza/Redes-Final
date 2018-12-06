@@ -46,7 +46,7 @@ Distribución logarítmica de grado
 no dirigida
 '''
 
-k, pk, centros, pk_log= logdist(deg, red.vcount(), n=90, w=True)
+k, pk, centros, pk_log= logdist(deg, red.vcount(), n=75, w=True)
 
 #%%
 
@@ -64,8 +64,8 @@ plt.loglog(k,pk,'.',color='0.9')
 plt.loglog(centros,pk_log,'.')
 applyPlotStyle('k',r'p$_k$') 
 
-#plt.gcf()
-#plt.savefig('grado-cg-repos.png', format='png',dpi=2000)
+plt.gcf()
+plt.savefig('grado-cg-users.png', format='png',dpi=2000)
 #plt.gcf().get_size_inches()
 
 #%%
@@ -74,15 +74,16 @@ Distribución logarítmica de pesos de enlaces
 no dirigida
 '''
 
-k, pk, centros, pk_log= logdist(wei, red.ecount(), n=110, w=True)
+k, pk, centros, pk_log= logdist(wei, red.ecount(), n=100, w=True)
 
 #%%%
 
 plt.figure(3)
 plt.title('Log Binning',loc='right',fontsize=10)
 plt.title('DISTRIBUCIÓN DE PESOS',loc='left',fontsize=10)
+#plt.loglog(k,pk,'.',color='0.9')
 plt.loglog(centros,pk_log,'.')
 applyPlotStyle('w',r'p$_w$')
 plt.show()
 
-#plt.savefig('pesos-cg-repos.png', format='png',dpi=2000)
+#plt.savefig('pesos-cg-users.png', format='png',dpi=2000)

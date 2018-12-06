@@ -31,9 +31,9 @@ rdg = ig.read('repos-directed.gml')
 #dred = rdg
 #red = rg.components().giant()
 
-red = ug
+#red = ug
 dred = udg
-#red = ug.components().giant()
+red = ug.components().giant()
 
 #%%%
 '''
@@ -60,21 +60,21 @@ densidad = dred.ecount()/(dred.vcount()*(dred.vcount()-1)/2)
 #%%
 '''
 CARACTERIZACIÓN
-no diridiga
+no dirigida
 '''
     
 print('Caracerísticas estructurales ')
 print('Nodos:', red.vcount(),'Edges:', red.ecount())
 print('k medio:', np.mean(deg), 'kmax:', max(deg), 'kmin:', min(deg))
 print('Densidad:', densidad)
-print('Average weight:',np.average(weights))
+print('Average weight:',np.average(wei))
 print('Cant. componentes:', red.components().__len__())
 #print('Transitividad:', clustg)
 
 #%%
 '''
 Caracerísticas estructurales
-no diridiga
+dirigida
 '''
     
 print('Caracerísticas estructurales ')
