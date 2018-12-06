@@ -2,19 +2,15 @@
 """
 Si hay variables que no están definidas, correrlas desde caract-graph.py
 """
+from matplotlib import pyplot as plt
+import numpy as np
 
 #%%
   
 def logdist(lista, N, n=14, w=False):
-    
-    '''
-    lista: elementos de la distribución
-    N: normalización
-    '''
-    
+
     kmax = max(lista)
     kmin = min(lista)
-    
     K = dict()
     
     for i in set(lista):
@@ -42,20 +38,51 @@ def logdist(lista, N, n=14, w=False):
         A.append(h[i]/(bins[i+1]-bins[i]))
     pk_log=A/sum(A)
     
-    return k, pk, centros, pk_log, sum(A)
+    return k, pk, centros, pk_log
 
 #%%
 '''
-Distribución logarítmica de grado o peso del grafo
+Distribución logarítmica de grado
 no dirigida
 '''
 
-k,pk,centros,pk_log, sumA = logdist(red.degree(), red.vcount(), n=90)
+k, pk, centros, pk_log= logdist(deg, red.vcount(), n=90, w=True)
 
+#%%
+
+def applyPlotStyle(xname,yname):
+    plt.xlabel(xname,weight='bold',fontsize=12)
+    plt.ylabel(yname,weight='bold',fontsize=12)
+    plt.gcf().set_size_inches([5, 4])
+    plt.tight_layout()
+    plt.show(block=False)
+     
 plt.figure(2)
-plt.title('Log-Log Scale, Log Binning',loc='left',fontsize=10)
+plt.title('Log Binning',loc='right',fontsize=10)
+plt.title('DISTRIBUCIÓN DE GRADO',loc='left',fontsize=10)
 plt.loglog(k,pk,'.',color='0.9')
 plt.loglog(centros,pk_log,'.')
 applyPlotStyle('k',r'p$_k$') 
-#applyPlotStyle('w',r'p$_w$')
+
+#plt.gcf()
+#plt.savefig('grado-cg-repos.png', format='png',dpi=2000)
+#plt.gcf().get_size_inches()
+
+#%%
+'''
+Distribución logarítmica de pesos de enlaces
+no dirigida
+'''
+
+k, pk, centros, pk_log= logdist(wei, red.ecount(), n=110, w=True)
+
+#%%%
+
+plt.figure(3)
+plt.title('Log Binning',loc='right',fontsize=10)
+plt.title('DISTRIBUCIÓN DE PESOS',loc='left',fontsize=10)
+plt.loglog(centros,pk_log,'.')
+applyPlotStyle('w',r'p$_w$')
 plt.show()
+
+#plt.savefig('pesos-cg-repos.png', format='png',dpi=2000)
