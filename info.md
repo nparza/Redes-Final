@@ -8,9 +8,20 @@
 
 #### Características estructurales
 
-| red      | nodos | enlaces  | < k > | k máx | k min | densidad | < w >    |
-| -------- | ----- | -------- | ----- | ----- | ----- | -------- | -------- |
-| dirigida | 56519 | 44561146 | 1577  | 31988 | 0     | 0.0279   | 0.000653 |
+| red         | nodos | enlaces  | < k > | k máx | k min | densidad | < w >    |
+| ----------- | ----- | -------- | ----- | ----- | ----- | -------- | -------- |
+| dirigida    | 56519 | 44561146 | 1577  | 31988 | 0     | 0.0279   | 0.000653 |
+| no dirigida | 56519 | 22280573 | 788   | 15994 | 0     | 0.01395  | 0.000653 |
+
+
+
+#### Componentes
+
+Cant. componentes total: 15067. La cantidad de nodos de la componente gigante es 39845, con 1.11 el número de nodos promedio de las demás componentes y 21 la cant. de nodos de la segunda más grande.
+
+| CG          | nodos | enlaces  | < k > | k máx | k min | densidad | < w >    |
+| ----------- | ----- | -------- | ----- | ----- | ----- | -------- | -------- |
+| no dirigida | 39845 | 22277795 | 1118  | 15994 | 1     | 0.02807  | 0.000625 |
 
 
 
