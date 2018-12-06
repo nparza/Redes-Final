@@ -48,3 +48,16 @@ La cantidad de nodos de la componente gigante es 99907, siendo 1.39 el número d
 | ----------- | ----- | -------- | ----- | ----- | ----- | -------- | ------- |
 | no dirigida | 99907 | 11044757 | 221   | 29649 | 1     | 0.00221  | 0.00422 |
 
+
+
+## Red de forkeos
+
+
+#### Caracterísiticas estructurales
+
+| red         | nodos  | enlaces  | < k > | k máx | k min | densidad | < w >   |
+| ----------- | ------ | -------- | ----- | ----- | ----- | -------- | ------- |
+| dirigida    | 120863 | 38954 | 0.6445   | 570 | 0     | 5.34e-06 | 1 |
+
+
+En dirigida: < k in > = < k out > = 0.322
