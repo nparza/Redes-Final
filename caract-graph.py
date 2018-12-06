@@ -41,9 +41,23 @@ CARACTERIZACIÓN
 no dirigida
 '''
 
-deg = red.degree()
-wei = [red.es[n]['weight'] for n in range(red.ecount())]
-densidad = red.ecount()/(red.vcount()*(red.vcount()-1)/2)
+def caract(red):
+    
+    deg = red.degree()
+    wei = [red.es[n]['weight'] for n in range(red.ecount())]
+    densidad = red.ecount()/(red.vcount()*(red.vcount()-1)/2)
+    
+    print('Caracerísticas estructurales ')
+    print('Nodos:', red.vcount(),'Edges:', red.ecount())
+    print('k medio:', np.mean(deg), 'kmax:', max(deg), 'kmin:', min(deg))
+    print('Densidad:', densidad)
+    print('Average weight:',np.average(wei))
+    print('Cant. componentes:', red.components().__len__())
+    print('Nodos comp. gigante:', red.components().giant().vcount())
+    print('Porción que representa la CG:', 
+          red.components().giant().vcount()/red.vcount())
+    
+
 #clustg = red.transitivity_avglocal_undirected(weights=weights)
 
 #%% 

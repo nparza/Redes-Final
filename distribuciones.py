@@ -46,7 +46,8 @@ Distribución logarítmica de grado
 no dirigida
 '''
 
-k, pk, centros, pk_log= logdist(deg, red.vcount(), n=75, w=True)
+k, pk, centros, pk_log= logdist(red_filt.degree(), 
+                                red_filt.vcount(), n=75)
 
 #%%
 
@@ -64,8 +65,8 @@ plt.loglog(k,pk,'.',color='0.9')
 plt.loglog(centros,pk_log,'.')
 applyPlotStyle('k',r'p$_k$') 
 
-plt.gcf()
-plt.savefig('grado-cg-users.png', format='png',dpi=2000)
+#plt.gcf()
+#plt.savefig('grado-cg-users.png', format='png',dpi=2000)
 #plt.gcf().get_size_inches()
 
 #%%

@@ -71,6 +71,6 @@ for idx, e in enumerate(g.es[idxi:idxf]):
 GUARDAR
 '''  
 
-ig.write(g,'users-directed.gml')  
-ig.write(g2, 'users-undirected.gml')
+#ig.write(g,'users-directed.gml')  
+ig.write(rcg, 'repos-CG-undirected.gml')
 

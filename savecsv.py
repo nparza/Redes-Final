@@ -23,9 +23,9 @@ idx de un nodo y el elemento en esa posición es el idx del clúster al
 que pertenece
 '''
 
-vertex_clustering_obj = rdv
+vertex_clustering_obj = udvc
 
-f = open('cluster-infomap-repos-directed.csv', 'w')
+f = open('cluster-infomap-users-directed.csv', 'w')
 print(list2csvrow(vertex_clustering_obj.membership), file=f)
 f.close()
 
