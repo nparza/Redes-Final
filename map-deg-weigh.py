@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
+import matplotlib as mpl
 #%%
 
 udg = ig.read('users-CG-undirected.gml')
@@ -112,8 +113,21 @@ dz = hist.ravel()
 
 ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color='b', zsort='average', shade=True)
 
-plt.show()
 
+plt.gcf()
+plt.savefig('user-wdeg-hist.pdf', format='pdf',dpi=2000)
+plt.gcf().get_size_inches()
+
+
+#%%
+
+ax1 = fig.add_subplot(133, title='NonUniformImage: interpolated',aspect='equal', xlim=xedges[[0, -1]], ylim=yedges[[0, -1]])
+im = mpl.image.NonUniformImage(ax1, interpolation='bilinear')
+xcenters = (xedges[:-1] + xedges[1:]) / 2
+ycenters = (yedges[:-1] + yedges[1:]) / 2
+im.set_data(xcenters, ycenters, hist)
+ax1.images.append(im)
+plt.show()
 #%%
 '''
 Distribution log-log
