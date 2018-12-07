@@ -63,7 +63,7 @@ plt.title('Log Binning',loc='right',fontsize=10)
 plt.title('DISTRIBUCIÓN DE GRADO',loc='left',fontsize=10)
 plt.loglog(k,pk,'.',color='0.9')
 plt.loglog(centros,pk_log,'.')
-applyPlotStyle('k',r'p$_k$') 
+applyPlotStyle('k',r'p$_k$')    
 
 #plt.gcf()
 #plt.savefig('grado-cg-users.png', format='png',dpi=2000)
