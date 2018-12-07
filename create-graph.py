@@ -16,9 +16,9 @@ cargar upeso, ufila, ucol con loadcsv.py
 
 uwij = csr_matrix((upeso, (ufila, ucol)), shape=(max(ufila)+1, max(ucol)+1))
         
-del upeso
-del ufila
-del ucol
+#del upeso
+#del ufila
+#del ucol
 
 #%%
 
@@ -33,8 +33,10 @@ targets, sources = uwij.nonzero()
 edgelist = list(zip(sources.tolist(), targets.tolist()))
 
 timear(t0, 'arranca')
-g = ig.Graph(edgelist, directed=True, 
-             edge_attrs={'weight': uwij.data.tolist()})
+#g = ig.Graph(edgelist, directed=True, 
+#             edge_attrs={'weight': uwij.data.tolist()})
+
+g = ig.Graph(edgelist, directed=True)
 
 timear(t0, 'rmloops()')
 rmloops(g)
@@ -71,6 +73,6 @@ for idx, e in enumerate(g.es[idxi:idxf]):
 GUARDAR
 '''  
 
-ig.write(g,'users-directed.gml')  
+ig.write(g,'forks-directed.gml')  
 ig.write(g2, 'users-undirected.gml')
 

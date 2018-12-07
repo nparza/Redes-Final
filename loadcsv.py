@@ -1,12 +1,13 @@
 
 '''
-CARGAR FILAS Y COLUMNAS DE LA MATRIZ ESPARSA BIPARTIRA
+CARGAR FILAS Y COLUMNAS DE LA MATRIZ ESPARSA BIPARTIRA 
+CARGAR FILAS Y COLUMNAS DE LA RED DE FORKEOS
 OBS: en el csv, la primera línea corresponde a los ínidices de los usuarios
 y la segunda a los índices de los repos, dependiendo la representación que 
 quiero hacer, se puede elegir cuáles representan filas y cuáles columnas
 '''
 
-entrada = open('bipartite.csv')
+entrada = open('family-tree.csv')
 
 lines = []
 

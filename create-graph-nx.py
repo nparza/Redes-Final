@@ -7,7 +7,10 @@ Created on Tue Nov 13 11:37:02 2018
 
 
 import pandas as pd
-
+import networkx as nx
+from scipy.sparse import csr_matrix
+from datetime import datetime as dt
+import numpy as np
 #%%
 main = pd.read_csv('data/data.txt', delimiter=':')
 
@@ -31,7 +34,29 @@ for r in pd.unique(main['repo']):
             
 nx.write_gml(userG, 'userG.gml.gz', stringizer=None)
 
+#%%
+'''DIRIGIDO'''
 
+'''
+CREO MATRIZ PESOS
+cargar peso, fila, col con loadcsv.py
+'''
+
+wij = csr_matrix((np.ones(len(fila)), (fila, col)), shape=(max(fila)+1, max(col)+1))
+        
+del fila
+del col
+
+#%%
+
+t0 = dt.now()
+targets, sources =wij.nonzero()
+edgelist = list(zip(sources.tolist(), targets.tolist()))
+
+G = nx.DiGraph()
+timear(t0, 'arranca')
+G.add_edges_from(edgelist)
+timear(t0, 'fin')
 
 
 

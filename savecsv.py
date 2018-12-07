@@ -32,3 +32,14 @@ f.close()
 del f, vertex_clustering_obj
 
 #%%
+
+'''
+Family tree
+'''
+
+f = open('family-tree.csv', 'w')
+print('fila,' + '%s' % list2csvrow(fila), file=f)
+print('col,' + '%s' % list2csvrow(col), file=f)
+f.close()
+
+del f
