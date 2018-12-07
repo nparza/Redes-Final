@@ -1,12 +1,4 @@
 
-'''
-Descomentá el subgrafo que queres caracterizar y tamo
-
--Distribución de grado o de peso, según prefieras
--Características estructurales (N,L,<k>,densidad, <C>, etc.)
-'''
-
-
 from matplotlib import pyplot as plt
 import numpy as np
 import igraph as ig
@@ -35,12 +27,84 @@ rdg = ig.read('repos-directed.gml')
 
 #%%
 
-red = rg
-dred = rdg
+#red = rg
+#dred = rdg
+#red = rg.components().giant()
+
+#red = ug
+dred = udg
+red = ug.components().giant()
+
+#%%%
+'''
+CARACTERIZACIÓN
+no dirigida
+'''
+
+def caract(red):
+    
+    deg = red.degree()
+    wei = [red.es[n]['weight'] for n in range(red.ecount())]
+    densidad = red.ecount()/(red.vcount()*(red.vcount()-1)/2)
+    
+    print('Caracerísticas estructurales ')
+    print('Nodos:', red.vcount(),'Edges:', red.ecount())
+    print('k medio:', np.mean(deg), 'kmax:', max(deg), 'kmin:', min(deg))
+    print('Densidad:', densidad)
+    print('Average weight:',np.average(wei))
+    print('Cant. componentes:', red.components().__len__())
+    print('Nodos comp. gigante:', red.components().giant().vcount())
+    print('Porción que representa la CG:', 
+          red.components().giant().vcount()/red.vcount())
+    
+
+#clustg = red.transitivity_avglocal_undirected(weights=weights)
+
+#%% 
+'''
+CARACTERIZACIÓN
+dirigida
+'''
+
+deg = dred.degree(); indeg = dred.indegree(); outdeg = dred.outdegree(); 
+wei = [dred.es[n]['weight'] for n in range(dred.ecount())]
+densidad = dred.ecount()/(dred.vcount()*(dred.vcount()-1)/2)
+#clustg = dred.transitivity_avglocal_undirected(weights=weights)
 
 #%%
+'''
+CARACTERIZACIÓN
+no dirigida
+'''
+    
+print('Caracerísticas estructurales ')
+print('Nodos:', red.vcount(),'Edges:', red.ecount())
+print('k medio:', np.mean(deg), 'kmax:', max(deg), 'kmin:', min(deg))
+print('Densidad:', densidad)
+print('Average weight:',np.average(wei))
+print('Cant. componentes:', red.components().__len__())
+#print('Transitividad:', clustg)
 
-## EDGES
+#%%
+'''
+Caracerísticas estructurales
+dirigida
+'''
+    
+print('Caracerísticas estructurales ')
+print('Nodos:', dred.vcount(),'Edges:', dred.ecount())
+print('k medio:', np.mean(deg), 'kmax:', max(deg), 'kmin:', min(deg))
+print('k medio in:', np.mean(indeg), 'k medio out:', np.mean(outdeg))
+print('Densidad:', densidad)
+print('Average weight:',np.average(wei))
+#print('Transitividad:', clustg)
+
+
+#%%
+'''
+ENLACES
+Imprime los enlaces con ID de idxi a idxf
+'''
 
 idxi = 100
 idxf = 107
@@ -53,44 +117,9 @@ print('DIRIGIDO')
 for idx, e in enumerate(dred.es[idxi:idxf]):
     print(idx+idxi, e.tuple, e['weight'])   
 
-#%%%
-'''
-COEFICIENTES Y GRADO
-no dirigida
-'''
-
-deg = red.degree()
-weights = [red.es[n]['weight'] for n in range(red.ecount())]
-densidad = red.ecount()/(red.vcount()*(red.vcount()-1)/2)
-clustg = red.transitivity_avglocal_undirected(weights=weights)
-
-#%%
-'''
-Distribución logarítmica de grado o peso del grafo
-no dirigida
-'''
-
-k,pk,centros,pk_log, sumA = logdist(red.degree(), red.vcount(), n=90)
-
-plt.figure(2)
-plt.title('Log-Log Scale, Log Binning',loc='left',fontsize=10)
-plt.loglog(k,pk,'.',color='0.9')
-plt.loglog(centros,pk_log,'.')
-applyPlotStyle('k',r'p$_k$') 
-#applyPlotStyle('w',r'p$_w$')
-plt.show()
 
 
-#%%
-'''
-Caracerísticas estructurales
-'''
-    
-print('Caracerísticas estructurales')
-print('Nodos:', red.vcount(),'Edges:', red.ecount())
-print('k medio:', np.mean(deg), 'kmax:', max(deg), 'kmin:', min(deg))
-print('Densidad:', densidad)
-print('Average weight:',np.average(weights))
-print('Transitividad:', clustg)
 
- 
+
+
+
