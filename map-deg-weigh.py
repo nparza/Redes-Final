@@ -9,6 +9,8 @@ import igraph as ig
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib import cm
+from matplotlib.ticker import LinearLocator, FormatStrFormatter
 #%%
 
 udg = ig.read('users-CG-undirected.gml')
@@ -91,23 +93,24 @@ for d in deg:
 
 # Fixing random state for reproducibility and construct hist
 np.random.seed(19680801)
-hist, xedges, yedges = np.histogram2d(deg, weights, bins=50, range=[[min(deg), max(deg)], [min(weights), max(weights)]])
+hist, xedges, yedges = np.histogram2d(deg, weights, bins=30, range=[[min(deg), max(deg)], [min(weights), max(weights)]])
 
 #%%
-fig = plt.figure()
+fig = plt.figure(30)
 ax = fig.add_subplot(111, projection='3d')
 
-# Construct arrays for the anchor positions of the 16 bars.
-xpos, ypos = np.meshgrid(xedges[:-1] + 0.25, yedges[:-1] + 0.25, indexing="ij")
-xpos = xpos.ravel()
-ypos = ypos.ravel()
+# Construct arrays for the anchor positions 
+xpos, ypos = np.meshgrid(xedges[:-1], yedges[:-1], indexing="ij")
+xpos = xpos.flatten('F')
+ypos = ypos.flatten('F')
 zpos = 0
 
-# Construct arrays with the dimensions for the 16 bars.
-dx = dy = 0.5 * np.ones_like(zpos)
+# Construct arrays with the dimensions .
+dx =  300 * np.ones_like(zpos)
+dy = 0.01 * np.ones_like(zpos)
 dz = hist.ravel()
 
-ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color='b', zsort='average')
+ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color='b', zsort='average', shade=True)
 
 plt.show()
 
@@ -116,7 +119,7 @@ plt.show()
 Distribution log-log
 '''
 #plt.plot(degidx[1:],awnorm,'g.')
-#
+
 
 def applyPlotStyle(xname,yname):
     plt.xlabel(xname,weight='bold',fontsize=12)
@@ -153,4 +156,25 @@ plt.show()
 # to Add a color bar which maps values to colors.
 surf=ax.plot_trisurf(xedges, yedges, hist, cmap=plt.cm.viridis, linewidth=0.2)
 fig.colorbar( surf, shrink=0.5, aspect=5)
+plt.show()
+
+#%%
+
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+
+# Make data.
+
+# Plot the surface.
+surf = ax.plot_surface(xedges, yedges, hist, cmap=cm.coolwarm,
+                       linewidth=0, antialiased=False)
+
+# Customize the z axis.
+ax.set_zlim(-1.01, 1.01)
+ax.zaxis.set_major_locator(LinearLocator(10))
+ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
+
+# Add a color bar which maps values to colors.
+fig.colorbar(surf, shrink=0.5, aspect=5)
+
 plt.show()
