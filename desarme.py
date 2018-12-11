@@ -10,78 +10,57 @@ from matplotlib import pyplot as plt
 
 #%%
 
-wei = [red.es[n]['weight'] for n in range(red.ecount())]
+wei = [redu.es[n]['weight'] for n in range(redu.ecount())]
 setwei = sorted(list(set(wei)))
+del wei
 
 #%%
 
-#def desarme_peso(red, setwei):
-#    
-#    eliminar = []
-#    for idx, e in enumerate(red.es):
-#        if e['weight'] <= setwei[0]:
-#            eliminar.append(idx)
-#    
-#    red.delete_edges(eliminar)
-#    cg = red.components().giant()
-#    
-#    #if cg.vcount()/red.vcount() <= 0.1:
-#    if len(setwei) == 10000:
-#         return []
-#    
-#    return [(len(eliminar), cg.vcount())] + desarme_peso(cg, setwei[1:])
-
-
-#        idx = []
-#        wei = []
-#        for x, e in enumerate(cg.es):
-#            idx.append(x)
-#            wei.append(e['weight'])
-#        idxsort, weisort = zip(*sorted(zip(idx, wei)))
-#        idx = list(idxsort); del idxsort
-#        wei = list(weisort); del weisort
-#        
-#        eliminar = []
-#        i = 0
-#        while wei[i] <= setwei[i]:
-#            eliminar.append(idx[i])
-#            i += 1
-
-
-def desarme_peso(red, setwei):
+def desarme_peso(red, setwei, tresh):
     
     fe = [0]
     fn = [1]
     N = red.vcount()
     E = red.ecount()
+    copy = red.copy()
     
-    cg = red.copy()  
-    i = 0
+    idx = []
+    wei = []
+    for x, e in enumerate(copy.es):
+        idx.append(x)
+        wei.append(e['weight'])
+    weisort, idxsort = zip(*sorted(zip(wei, idx)))
+    idx = list(idxsort); del idxsort
+    wei = list(weisort); del weisort
     
-    while cg.vcount()/N > 0.2:
+    maxcomp = N
+    i = 1
+    j = 1
+    
+    while maxcomp/N > tresh:
+         
+        eliminar = [] 
+        while wei[j] <= setwei[i]:
+            eliminar.append(idx[j])
+            j += 1
         
-        eliminar = []
-        for idx, e in enumerate(cg.es):
-            if e['weight'] <= setwei[i]:
-                eliminar.append(idx)
-            
-        cg.delete_edges(eliminar)
-        cg = cg.components().giant()
+        if len(eliminar) > 0:
+            copy.delete_edges(eliminar)
+            maxcomp = max(copy.components().sizes())
         
-        if cg.vcount()/N > 0.2:
-            
-            fe.append(len(eliminar)/E + fe[-1])
-            fn.append(cg.vcount()/N)
-            print(setwei[i])
-            i += 1
+            if maxcomp/N > tresh:   
+                fe.append(len(eliminar)/E + fe[-1])
+                fn.append(maxcomp/N)
+                print(setwei[i], len(fe), len(fn))
+        i += 1
     
     return fe, fn
     
     
 #%%
 
-fe, fn = desarme_peso(red.copy(), setwei)  
-
+umbrales = np.logspace(np.log10(min(setwei)),np.log10(max(setwei)+1),1000)
+fe, fn = desarme_peso(redu, umbrales, 0.2)  
 
 #%%
     
