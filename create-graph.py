@@ -73,6 +73,11 @@ for idx, e in enumerate(g.es[idxi:idxf]):
 GUARDAR
 '''  
 
+<<<<<<< HEAD
 ig.write(g,'forks-directed.gml')  
 ig.write(g2, 'users-undirected.gml')
+=======
+#ig.write(g,'users-directed.gml')  
+ig.write(rcg, 'repos-CG-undirected.gml')
+>>>>>>> 223870946b8243d9fcad6eb1e1904594f77d1ea7
 
