@@ -23,35 +23,25 @@ def desarme_peso(red, setwei, tresh):
     N = red.vcount()
     E = red.ecount()
     copy = red.copy()
+    cg = copy.components().giant()
+
+    i = 0
     
-    idx = []
-    wei = []
-    for x, e in enumerate(copy.es):
-        idx.append(x)
-        wei.append(e['weight'])
-    weisort, idxsort = zip(*sorted(zip(wei, idx)))
-    idx = list(idxsort); del idxsort
-    wei = list(weisort); del weisort
-    
-    maxcomp = N
-    i = 1
-    j = 1
-    
-    while maxcomp/N > tresh:
+    while cg.vcount()/N > tresh and i < len(setwei):
          
         eliminar = [] 
-        while wei[j] <= setwei[i]:
-            eliminar.append(idx[j])
-            j += 1
-        
+        for idx, e in enumerate(cg.es):
+            if e['weight'] <= setwei[i]:
+                eliminar.append(idx)
+
         if len(eliminar) > 0:
-            copy.delete_edges(eliminar)
-            maxcomp = max(copy.components().sizes())
+            cg.delete_edges(eliminar)
+            cg = cg.components().giant()
         
-            if maxcomp/N > tresh:   
+            if cg.vcount()/N > tresh:   
                 fe.append(len(eliminar)/E + fe[-1])
-                fn.append(maxcomp/N)
-                print(setwei[i], len(fe), len(fn))
+                fn.append(cg.vcount()/N)
+                print(setwei[i], len(fe))
         i += 1
     
     return fe, fn
@@ -59,8 +49,8 @@ def desarme_peso(red, setwei, tresh):
     
 #%%
 
-umbrales = np.logspace(np.log10(min(setwei)),np.log10(max(setwei)+1),1000)
-fe, fn = desarme_peso(redu, umbrales, 0.2)  
+umbrales = np.logspace(np.log10(min(setwei)),np.log10(max(setwei)),500)
+fe, fn = desarme_peso(redu, umbrales, 0.05)  
 
 #%%
     
