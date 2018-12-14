@@ -16,26 +16,6 @@ import matplotlib as mpl
 
 udg = ig.read('users-CG-undirected.gml')
 
-
-#%%
-#def dweight(graph, MODE = 3):
-#    '''
-#    graph: igraph graph
-#    MODE: OUT = 1 ; IN = 2 ; ALL = 3
-#    '''
-#    weights = list()
-#    for n in graph.vs:        
-#        v = graph.neighbors(n, mode=MODE)
-#        for i in v:
-#            if MODE == 1:
-#                weights.append(graph[n,i])    
-#            if MODE == 2:
-#                weights.append(graph[i,n])
-#            if MODE == 3:
-#                weights.append(graph[n,i])
-#                weights.append(graph[i,n])
-#    print('Mode %s' %MODE)
-#    return weights
 #%%
     
 def dweight_node(graph,n, MODE = 3):
@@ -71,16 +51,26 @@ weights = ave_weight(udg, MODE = 2)
 
 aweg = np.zeros(max(deg)+1)
 norm = np.zeros(max(deg)+1)
+devwe = np.zeros(max(deg)+1)
 
 for i in range(len(deg)):
     norm[deg[i]] += 1
     aweg[deg[i]] += weights[i]
     
-awnorm = [aweg[i]/norm[i] for i in range(max(deg))]
+awnorm = [aweg[i]/norm[i] for i in range(max(deg)+1)]
+#
+#for i in range(len(deg)):
+#    devwe[deg[i]] += weights[i]-awnorm[deg[i]]
+#
+#devwe = [devwe[i]/(norm[i]-1) for i in range(max(deg)+1)]
 
 for a in awnorm:
     if a == 0.0:
         awnorm.remove(a)
+#        
+#for d in devwe:
+#    if a == 0.0:
+#        devwe.remove(d)        
         
 degidx = np.zeros(max(deg)+1)
 for d in deg:
@@ -95,6 +85,8 @@ for d in deg:
 # Fixing random state for reproducibility and construct hist
 np.random.seed(19680801)
 hist, xedges, yedges = np.histogram2d(deg, weights, bins=30, range=[[min(deg), max(deg)], [min(weights), max(weights)]])
+xcenters = (xedges[1:]+xedges[:-1])/2
+ycenters = (yedges[1:]+yedges[:-1])/2
 
 #%%
 fig = plt.figure(30)
@@ -114,26 +106,15 @@ dz = hist.ravel()
 ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color='b', zsort='average', shade=True)
 
 
-plt.gcf()
-plt.savefig('user-wdeg-hist.pdf', format='pdf',dpi=2000)
-plt.gcf().get_size_inches()
+#plt.gcf()
+#plt.savefig('user-wdeg-hist.pdf', format='pdf',dpi=2000)
+#plt.gcf().get_size_inches()
 
 
-#%%
-
-ax1 = fig.add_subplot(133, title='NonUniformImage: interpolated',aspect='equal', xlim=xedges[[0, -1]], ylim=yedges[[0, -1]])
-im = mpl.image.NonUniformImage(ax1, interpolation='bilinear')
-xcenters = (xedges[:-1] + xedges[1:]) / 2
-ycenters = (yedges[:-1] + yedges[1:]) / 2
-im.set_data(xcenters, ycenters, hist)
-ax1.images.append(im)
-plt.show()
 #%%
 '''
 Distribution log-log
 '''
-#plt.plot(degidx[1:],awnorm,'g.')
-
 
 def applyPlotStyle(xname,yname):
     plt.xlabel(xname,weight='bold',fontsize=12)
@@ -143,11 +124,14 @@ def applyPlotStyle(xname,yname):
     plt.show(block=False)
      
 plt.figure(2)
+lin1 = {'linestyle': 'None'} #No sé cómo funciona esto pero me saca la linea que une todos los errores
+plt.rc('lines', **lin1) 
 plt.title('Mode: IN',loc='right',fontsize=10)
 plt.title('Users deg-weight relation',loc='left',fontsize=10)
-plt.loglog(degidx[1:],awnorm,'.')
+plt.loglog(degidx,awnorm,'.')
+#plt.errorbar(degidx, awnorm, devwe, xerr=None,  fmt='', capsize=3, ecolor ='seagreen' )
 applyPlotStyle('Degree','Weights') 
-
+plt.errorbar()
 plt.gcf()
 plt.savefig('user-wdeg-map.pdf', format='pdf',dpi=2000)
 plt.gcf().get_size_inches()
@@ -161,34 +145,22 @@ Correr primera celda de 3D Histogram
 '''
 
 # Make the plot
-fig = plt.figure()
-ax = fig.gca(projection='3d')
-ax.plot_trisurf(xedges, yedges, hist, cmap=plt.cm.viridis, linewidth=0.2)
-plt.show()
- 
-
-# to Add a color bar which maps values to colors.
-surf=ax.plot_trisurf(xedges, yedges, hist, cmap=plt.cm.viridis, linewidth=0.2)
-fig.colorbar( surf, shrink=0.5, aspect=5)
-plt.show()
-
-#%%
-
-fig = plt.figure()
-ax = fig.gca(projection='3d')
+fig2 = plt.figure()
+ax2 = fig2.gca(projection='3d')
 
 # Make data.
+Xcenters, Ycenters = np.meshgrid(xcenters, ycenters)
 
 # Plot the surface.
-surf = ax.plot_surface(xedges, yedges, hist, cmap=cm.coolwarm,
-                       linewidth=0, antialiased=False)
+#n = mpl.colors.Normalize(0,18000)
 
-# Customize the z axis.
-ax.set_zlim(-1.01, 1.01)
-ax.zaxis.set_major_locator(LinearLocator(10))
-ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
+cmap = cm.coolwarm
+cmap.set_under(color='b', alpha=0.0)
+surf = ax2.plot_surface(Xcenters, Ycenters, hist, cmap=cmap,
+                       linewidth=1000, antialiased=False)
+
 
 # Add a color bar which maps values to colors.
-fig.colorbar(surf, shrink=0.5, aspect=5)
+fig2.colorbar(surf, shrink=0.5, aspect=5)
 
 plt.show()
