@@ -14,12 +14,12 @@ DIRIGIDO
 filas: targets, columnas: sources, por cómo calculamos la matriz pesos
 '''
 
-targets, sources = wij.nonzero()
-edgelist = list(zip(sources.tolist(), targets.tolist()))
-
+#sources, targets = wij.nonzero()
+#edgelist = list(zip(sources.tolist(), targets.tolist()))
+    
 node_names = ['one', 'two', 'three', 'four', 'five', 'six', 'seven']
 
-tg = ig.Graph(edgelist, directed=True, 
+tgs = ig.Graph(edgelist, directed=True, 
              edge_attrs={'weight': wij.data.tolist()},
              vertex_attrs={'label': node_names})
 
@@ -29,9 +29,9 @@ tg = ig.Graph(edgelist, directed=True,
 NO DIRIGIDO - PESO PROMEDIO
 '''
 
-tg2 = tg.copy()
-tg2.to_undirected(mode='collapse', combine_edges='mean')
-rmloops(tg2)
+tgs2 = tgs.copy()
+tgs2.to_undirected(mode='collapse', combine_edges='mean')
+rmloops(tgs2)
 
 
 #%%
@@ -59,7 +59,7 @@ plot(tg)
 
 print('NO DIRIGIDO')
 for idx, e in enumerate(tg2.es):
-    print(idx, e.tuple, e['weight'])   
+    print(idx, e.tuple, e['weight'])
 
 print('DIRIGIDO')    
 for idx, e in enumerate(tg.es):
@@ -69,16 +69,16 @@ for idx, e in enumerate(tg.es):
 #%% VERTEX
 
 print('NO DIRIGIDO')
-for idx, v in enumerate(tg2.vs):
-    print(idx, v.index, v['label'])   
+for idx, v in enumerate(tgs2.vs):
+    print(idx, v.index, v.degree(), v['label'])   
 
-print('DIRIGIDO')    
-for idx, v in enumerate(tg.vs):
-    print(idx, v.index, v['label'])      
+#print('DIRIGIDO')    
+#for idx, v in enumerate(tg.vs):
+#    print(idx, v.index, v['label'])      
 
 #%%
 
-ig.write(g2,'test.gml')      
+ig.write(tg2,'test-undirected.gml')      
 
 
 

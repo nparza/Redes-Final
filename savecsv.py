@@ -43,3 +43,28 @@ print('col,' + '%s' % list2csvrow(col), file=f)
 f.close()
 
 del f
+
+#%% 
+
+'''
+DESARME
+'''
+
+f = open('desarme-peso-mM.csv', 'w')
+print('desarme por peso de los enlaces, removiéndolos de menor peso a mayor peso',
+      file=f)
+print('fn: fracción de nodos de la comp. gigante, \
+      fe: fracción de enlaces removidos respecto de la cantidad de enlaces inicial \
+      de la CG, cutoff: los nodos removidos tienen peso menor o igual al cutoff',
+      file=f)
+print('fe,' + '%s' % list2csvrow(fe), file=f)
+print('fn,' + '%s' % list2csvrow(fn), file=f)
+print('cutoff,' + '%s' % list2csvrow(cutoff), file=f)
+f.close()
+
+
+
+
+
+
+

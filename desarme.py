@@ -20,6 +20,7 @@ def desarme_peso(red, setwei, tresh):
     
     fe = [0]
     fn = [1]
+    cutoff = [0]
     N = red.vcount()
     E = red.ecount()
     copy = red.copy()
@@ -41,31 +42,40 @@ def desarme_peso(red, setwei, tresh):
             if cg.vcount()/N > tresh:   
                 fe.append(len(eliminar)/E + fe[-1])
                 fn.append(cg.vcount()/N)
+                cutoff.append(setwei[i])
                 print(setwei[i], len(fe))
         i += 1
     
-    return fe, fn
+    return fe, fn, cutoff
     
     
 #%%
 
 umbrales = np.logspace(np.log10(min(setwei)),np.log10(max(setwei)),500)
-fe, fn = desarme_peso(redu, umbrales, 0.05)  
+fe, fn, cutoff = desarme_peso(redu, umbrales, 0.05)  
 
 #%%
+
+'''
+PLOTEAR DESARME POR PESO
+'''
     
 def applyPlotStyle(xname,yname):
     plt.xlabel(xname,weight='bold',fontsize=12)
     plt.ylabel(yname,weight='bold',fontsize=12)
-    plt.gcf().set_size_inches([5, 4])
+    plt.gcf().set_size_inches([5, 8])
     plt.tight_layout()
     plt.show(block=False)
      
-plt.figure(2)
-#plt.title('Log Binning',loc='right',fontsize=10)
-#plt.title('DISTRIBUCIÓN DE GRADO',loc='left',fontsize=10)
-#plt.loglog(k,pk,'.',color='0.9')
-plt.plot(fe,fn,'.')
+plt.figure(24)
+plt.subplot(2,1,1)
+plt.semilogx(cutoff,fn,'.')
+applyPlotStyle('weight cutoff','fracción de nodos comp. gigante') 
+plt.subplot(2,1,2)
+plt.plot(fe,fn,'r.')
 applyPlotStyle('fracción de enlaces removidos','fracción de nodos comp. gigante') 
+
+#plt.subplots_adjust(wspace=None, hspace=0.285)
+#plt.savefig('desarme-users-peso-mM.png', format='png',dpi=2000)
 
    

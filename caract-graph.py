@@ -118,6 +118,20 @@ for idx, e in enumerate(dred.es[idxi:idxf]):
     print(idx+idxi, e.tuple, e['weight'])   
 
 
+#%%
+
+'''
+VERTICES
+'''
+
+idxi = 0
+idxf = copy.vcount()
+
+print('NO DIRIGIDO')
+for v in copy.vs[idxi:idxf]:
+    if v['id'] == 8:
+        print(v['id'])   
+    
 
 
 
