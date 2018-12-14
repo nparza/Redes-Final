@@ -18,8 +18,8 @@ for line in lines:
     for i in range(1,len(line)):
         line[i] = int(line[i])
 
-fila = lines[1][1:]
-col = lines[0][1:]
+bfila = lines[1][1:]
+bcol = lines[0][1:]
 
 del line
 del lines
