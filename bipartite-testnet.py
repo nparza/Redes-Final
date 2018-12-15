@@ -3,9 +3,14 @@ from scipy.sparse import csr_matrix
 import numpy as np
 import pandas as pd
 
+runfile('mapeo.py')
+
+#%%
+
 '''
 CREO MATRIZ ESPARSA BIPARTITA
 cargar peso, fila, col con loadcsv.py
+bfila: repos, bcol: users
 '''
 
 bdata = [1]*len(bfila)
@@ -57,7 +62,8 @@ posibles = list()
 
 for v in cg.vs():
     if v['id'] in metadata:
-        posibles.append(v['id'])
+        posibles.append(v['id'])      
+del v
 
 #%%
 
@@ -65,4 +71,21 @@ for v in cg.vs():
 Tengo matriz esparsa bipartita donde los repos son las filas.
 Quiero sacar algunos watcheos. 
 '''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
