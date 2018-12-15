@@ -1,23 +1,15 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov 16 01:58:23 2018
 
-@author: noelp
-"""
 '''
 ------------SUBGRAFO DEL GRAFO PRINCIPAL----------------
 
 Es necesario tener cargado el grafo principal 'red', para que el nuevo grafo
 sea subgrafo de éste
 
-
-Nodos: users que watchean +70 repos en simultáneo
-Enlaces: repo watcheado en simultáneo
-Peso: Cantidad de repos watcheados
 '''
 
 
 import igraph as ig
+
 #%%
 
 userGig = ig.read('C:/Users/noelp/Documents/Git/Redes-TPFinal-Grafos/userG.gml')

@@ -1,5 +1,4 @@
 *.gml
-weights_igraph.py
 *.csv
 *.png
 .ipynb_checkpoints

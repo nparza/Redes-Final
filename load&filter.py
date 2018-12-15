@@ -8,7 +8,7 @@ import numpy as np
 CARGO GRAFO USERS
 '''
 
-red = ig.read('users-CG-undirected.gml')
+redu = ig.read('users-CG-undirected.gml')
 
 #%%
 
@@ -16,7 +16,7 @@ red = ig.read('users-CG-undirected.gml')
 CARGO GRAFO PRINCIPAL REPOS
 '''
 
-red = ig.read('repos-CG-undirected.gml')
+redr = ig.read('repos-CG-undirected.gml')
 
 #%%
 

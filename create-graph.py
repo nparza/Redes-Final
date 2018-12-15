@@ -14,11 +14,15 @@ CREO MATRIZ PESOS
 cargar upeso, ufila, ucol con loadcsv.py
 '''
 
+<<<<<<< HEAD
 uwij = csr_matrix((peso, (fila, col)), shape=(max(fila)+1, max(col)+1))
+=======
+rwij = csr_matrix((rpeso, (rfila, rcol)), shape=(max(rfila)+1, max(rcol)+1))
+>>>>>>> 0f85ba9e9ccdc07bee60773c2a7a5533f01f194e
         
-#del upeso
-#del ufila
-#del ucol
+del rpeso
+del rfila
+del rcol
 
 #%%
 
@@ -33,8 +37,6 @@ targets, sources = uwij.nonzero()
 edgelist = list(zip(sources.tolist(), targets.tolist()))
 
 timear(t0, 'arranca')
-#g = ig.Graph(edgelist, directed=True, 
-#             edge_attrs={'weight': uwij.data.tolist()})
 
 g = ig.Graph(edgelist, directed=True)
 
