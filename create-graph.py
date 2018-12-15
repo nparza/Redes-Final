@@ -14,7 +14,11 @@ CREO MATRIZ PESOS
 cargar upeso, ufila, ucol con loadcsv.py
 '''
 
+<<<<<<< HEAD
+uwij = csr_matrix((peso, (fila, col)), shape=(max(fila)+1, max(col)+1))
+=======
 rwij = csr_matrix((rpeso, (rfila, rcol)), shape=(max(rfila)+1, max(rcol)+1))
+>>>>>>> 0f85ba9e9ccdc07bee60773c2a7a5533f01f194e
         
 del rpeso
 del rfila
