@@ -198,7 +198,7 @@ ty2degree = degreetype(col)
 
 ## ARMO MATRIZ DE PESOS PARA USUARIOS
 
-peso, ufila, ucol = weightmatrix(fila, col, ty2degree)
+peso, rfila, rncol = weightmatrix(fila, col, ty2degree)
 
 
 #%%

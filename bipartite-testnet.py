@@ -222,3 +222,67 @@ Si no printea nada, está todo bien!
 '''    
         
 #%%        
+
+'''
+Remuevo los ínidies de tncol y tnfila correspondientes 
+a los watcheos elegidos.
+tncol debe estar sorteada (usuarios) y tnfila (repos) sorteada según tncol
+'''
+
+indextorm = list()
+
+def widxtorm(w,inicio,final,repos):
+    
+    j = inicio
+    while j < final + 1:
+        if repos[j] == w:
+            return j
+        j += 1
+    
+for i in range(len(urm)):
+    
+    inicio, final = position(urm[i],tncol)
+    indextorm.append(widxtorm(wrm[i],inicio,final,tnfila))
+
+
+for i in sorted(indextorm, reverse=True):
+    del tncol[i]
+    del tnfila[i]
+    
+del i, inicio, final
+
+
+#%%
+
+'''
+Chequeo que removí bien
+'''
+
+l_bfila = list(bfila)
+l_tnfila = list(tnfila)
+
+for i in range(len(wrm)):
+    
+    if l_bfila.count(wrm[i]) - l_tnfila.count(wrm[i]) != 1:
+        print('Fail')
+    
+del l_bfila, l_tnfila, i    
+
+'''
+Si no printea nada, cool
+'''
+        
+#%%   
+
+    
+'''
+Guardar tnfila correspondiente a repos y tncol correspondiente a users
+en un csv!
+'''
+
+
+
+
+
+
+
