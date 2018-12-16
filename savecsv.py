@@ -63,6 +63,18 @@ print('fn,' + '%s' % list2csvrow(fn), file=f)
 print('cutoff,' + '%s' % list2csvrow(cutoff), file=f)
 f.close()
 
+#%%
+
+'''
+Watcheos removidos para testnet
+'''
+
+f = open('testnet-removidos.csv', 'w')
+print('user,' + '%s' % list2csvrow(urm), file=f)
+print('watch_removed,' + '%s' % list2csvrow(wrm), file=f)
+f.close()
+
+del f
 
 
 

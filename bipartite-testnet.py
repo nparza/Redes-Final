@@ -109,7 +109,8 @@ for i in range(bip.shape[1]):
 Me armo una lista con tuplas de (usuario, watcheo removido)
 '''
 
-removidos = list()
+urm = list()
+wrm = list()
 
 ## En las filas están los indices de los repos, en las columnas los users
     
@@ -147,21 +148,23 @@ for key, v in kubip.items():
         w = obtain(inicio, final, tnfila)
         np.random.shuffle(w)
         
-        ## Si el user watchea menos de 100 repos, sólo voy a pedir que el 
-        ## repo que le remuevo tenga grado al menos 2 en la bipartita
+        ## Voy a pedir que el repo que le remuevo tenga grado al menos 
+        ## 2 en la bipartita y que además no lo haya removido de un watcheo
+        ## en alguna iteración anterior
         if key < 22:
             
             m = 0
-            degreeok = False
+            ok = False
             
-            while not degreeok and m < len(w) and j < len(v) and j < 30:
+            while not ok and m < len(w) and j < len(v) and j < 30:
                 
                 repito = w[m]
-                degreeok = bip[repito,:].getnnz() > 1 
+                ok = bip[repito,:].getnnz() > 1 and (repito not in wrm)
                 m += 1
             
-            if degreeok:
-                removidos.append((v[i],repito))
+            if ok:
+                urm.append(v[i])
+                wrm.append(repito)
                 j += 1 
         
         ## Si el user watchea a más de 100 repos, voy a pedir que el repo que
@@ -169,36 +172,32 @@ for key, v in kubip.items():
         else:
             
             m = 0
-            enposibles = False
+            ok = False
             
-            while not enposibles and m < len(w) and j < len(v) and j < 30:
+            while not ok and m < len(w) and j < len(v) and j < 30:
                 
                 repito = w[m]
-                enposibles = (repito in posibles) \
-                and (bip[repito,:].getnnz() > 1)
+                ok = (repito in posibles) \
+                and (bip[repito,:].getnnz() > 1) and (repito not in wrm)
                 m += 1
                     
-            if enposibles:
-                removidos.append((v[i],repito))
+            if ok:
+                urm.append(v[i])
+                wrm.append(repito)
                 j += 1
         
         i += 1
-        print(len(removidos),j)
+        print(len(urm),j)
 
 
-del key,value,inicio,final,w,repito,m,i,enposibles,degreeok,v
+del key,value,inicio,final,w,repito,m,i,ok,v,j
         
 #%%
         
 '''
-Testeo no estar dejando en cero el grado de un repo en la bipartita
+Testeo no estar dejando en cero el grado de un repo en la bipartita o no 
+haber sacado el watcheo de un mismo repo
 '''
-
-urm = list()  
-wrm = list()      
-for tup in removidos:
-    wrm.append(tup[1])
-    urm.append(tup[0])
 
 wrms = sorted(wrm) 
 
@@ -210,10 +209,16 @@ for r in set(wrm):
     if bip[r,:].getnnz() <= apariciones:
         print(r, bip[r,:].getnnz(), apariciones)
 
-del inicio, final, apariciones, r, tup
-    
+del inicio, final, apariciones, r
+
+for i in range(len(wrms)-1):
+    if wrms[i] == wrms[i+1]:
+        print(True)
+        
+del wrms, i
+
 '''
-Está todo bien!
+Si no printea nada, está todo bien!
 '''    
         
 #%%        
