@@ -73,3 +73,29 @@ membership = line
 del i, entrada, line
 
 
+#%%
+
+'''
+CARGAR LOS WATCHEOS REMOVIDOS EN LA TESTNET
+'''
+
+entrada = open('data/testnet-removidos.csv')
+
+lines = []
+
+for line in entrada:
+    lines.append(line.split(','))
+    
+for line in lines:
+    for i in range(1,len(line)):
+        line[i] = int(line[i])
+
+urm = lines[0][1:]
+wrm = lines[1][1:]
+
+del line
+del lines
+del entrada
+del i
+
+

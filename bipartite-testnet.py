@@ -179,7 +179,7 @@ for key, v in kubip.items():
                 repito = w[m]
                 ok = (repito in posibles) \
                 and (bip[repito,:].getnnz() > 1) and (repito not in wrm)
-                m += 1
+                m += 1  
                     
             if ok:
                 urm.append(v[i])
@@ -273,16 +273,9 @@ Si no printea nada, cool
 '''
         
 #%%   
-
-    
+ 
 '''
 Guardar tnfila correspondiente a repos y tncol correspondiente a users
 en un csv!
 '''
-
-
-
-
-
-
 

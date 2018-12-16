@@ -8,8 +8,8 @@ def list2csvrow(l):
 
 f = open('testnet-weights-repo.csv', 'w')
 print('peso,' + '%s' % list2csvrow(peso), file=f)
-print('rfila,' + '%s' % list2csvrow(rfila), file=f)
-print('rcol,' + '%s' % list2csvrow(rcol), file=f)
+print('fila,' + '%s' % list2csvrow(rfila), file=f)
+print('col,' + '%s' % list2csvrow(rncol), file=f)
 #print('language,' +'%s' % list2csvrow(name), file=f)
 f.close()
 
