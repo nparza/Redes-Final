@@ -12,8 +12,8 @@ import numpy as np
 #%%
 
 
-main = pd.read_csv('data/repos.txt', sep=':|,')
-langs = pd.read_csv('data/lang.txt', sep=':')
+main = pd.read_csv('contest/repos.txt', sep=':|,')
+langs = pd.read_csv('contest/lang.txt', sep=':')
 
 #### Hay 93k repos que fueron forkeados de algún lugar.
 
@@ -41,6 +41,31 @@ r = range(len(repo))
 def repo2index(a):
         return r[repo.index(a)]
 
+
+
+def strseparator(string, sep1=',',sep2=';'):
+    elements = dict()
+    lines = string.split(sep1)
+    for m in lines:
+        elements[m.split(sep2)[0]] = m.split(sep2)[1]
+    return elements
+
+def timer(i,count = main['repo'].shape[0]):
+    if i ==1:
+        print('Primera iteración', dt.now()-t0)                        
+    if i ==int(count*0.1):
+        print('10%', dt.now()-t0)
+    if i == int(count*0.25):
+        print('25%', dt.now()-t0)
+    if i == int(count*0.5):
+        print('50%', dt.now()-t0)
+    if i == int(count*0.75):
+        print('75%', dt.now()-t0)
+    if i == int(count*0.99):
+        print('99%', dt.now()-t0)
+
+
+
 #%%
 
 ## Creo los elementos de mi matriz esparza
@@ -48,38 +73,17 @@ def repo2index(a):
 
 col = list() ##Repos hijos
 fila = list() ##Repos padres
-## Atributos que quiero appendear
-name = list() 
-lang = list()
+
 
 t0 = dt.now()
 for i in range(main.iloc[-1].name + 1):
     a = main.iloc[i]
-    if np.isnan(a.forked) != True:
+    l = langs.loc[langs['repo'] == a.repo]
+    if np.isnan(a.forked) != True and l.empty != True:
         fila.append(repo2index(a.repo))
         col.append(repo2index(a.forked))
-        l = langs.loc[langs['repo'] == a.repo]
-        if l.empty != True:
-            lanlines = l.iloc[0].lan.split('.')
-            lans = list()
-            for m in lanlines:
-                lans.append(m.split(';')[0])
-            lang.append(lans)
-        else:
-            lang.append('nan')
+        metadata = strseparator(l.iloc[0].lan)
         name.append(a.repo)
-    if i ==1:
-        print('Primera iteración', dt.now()-t0)                        
-    if i ==int(main['repo'].shape[0]*0.1):
-        print('10%', dt.now()-t0)
-    if i == int(main['repo'].shape[0]*0.25):
-        print('25%', dt.now()-t0)
-    if i == int(main['repo'].shape[0]*0.5):
-        print('50%', dt.now()-t0)
-    if i == int(main['repo'].shape[0]*0.75):
-        print('75%', dt.now()-t0)
-    if i == int(main['repo'].shape[0]*0.99):
-        print('99%', dt.now()-t0)
 
 data = np.ones(len(col))
 
