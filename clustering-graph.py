@@ -66,7 +66,8 @@ CALCULO CLUSTERS CON FAST GREEDY
 reposcom creo que es una lista de listas donde cada lista es una comunidad 
 '''
 reposcom = reposCG.community_fastgreedy(weights=None)
-
+#fgclust = reposcom.as_clustering()
+fgclust2 = reposcom.as_clustering(n = 20)
 '''
 Ir a savecsv.py y guardar!
 Los clusters con ifastgreedy se hicieron a la componente gigante del grafo no dirigido
