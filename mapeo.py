@@ -30,4 +30,4 @@ def index2repo(a):
     return repo[ri.index(a)]
 
 del main
-del pd   
+del pd

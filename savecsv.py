@@ -6,11 +6,11 @@ def list2csvrow(l):
 
 #%%    
 
-f = open('weights-repo(2).csv', 'w')
-print('peso,' + '%s' % list2csvrow(data), file=f)
-print('fila,' + '%s' % list2csvrow(fila), file=f)
-print('col,' + '%s' % list2csvrow(col), file=f)
-print('language,' +'%s' % list2csvrow(name), file=f)
+f = open('testnet-weights-repo.csv', 'w')
+print('peso,' + '%s' % list2csvrow(peso), file=f)
+print('fila,' + '%s' % list2csvrow(rfila), file=f)
+print('col,' + '%s' % list2csvrow(rncol), file=f)
+#print('language,' +'%s' % list2csvrow(name), file=f)
 f.close()
 
 del f
@@ -63,9 +63,30 @@ print('fn,' + '%s' % list2csvrow(fn), file=f)
 print('cutoff,' + '%s' % list2csvrow(cutoff), file=f)
 f.close()
 
+#%%
+
+'''
+Watcheos removidos para testnet
+'''
+
+f = open('testnet-removidos.csv', 'w')
+print('user,' + '%s' % list2csvrow(urm), file=f)
+print('watch_removed,' + '%s' % list2csvrow(wrm), file=f)
+f.close()
+
+del f
 
 
+#%%
 
+'''
+BIPARTITA
+'''
 
+f = open('testnet-bipartite.csv', 'w')
+print('repos_fila,' + '%s' % list2csvrow(tnfila), file=f)
+print('users_col,' + '%s' % list2csvrow(tncol), file=f)
+f.close()
 
+del f
 

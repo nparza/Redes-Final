@@ -7,7 +7,7 @@ y la segunda a los índices de los repos, dependiendo la representación que
 quiero hacer, se puede elegir cuáles representan filas y cuáles columnas
 '''
 
-entrada = open('data/bipartite.csv')
+entrada = open('data/testnet-bipartite.csv')
 
 lines = []
 
@@ -18,8 +18,8 @@ for line in lines:
     for i in range(1,len(line)):
         line[i] = int(line[i])
 
-bfila = lines[1][1:]
-bcol = lines[0][1:]
+fila = lines[0][1:]
+col = lines[1][1:]
 
 del line
 del lines
@@ -71,5 +71,31 @@ for i in range(len(line)):
 membership = line   
 
 del i, entrada, line
+
+
+#%%
+
+'''
+CARGAR LOS WATCHEOS REMOVIDOS EN LA TESTNET
+'''
+
+entrada = open('data/testnet-removidos.csv')
+
+lines = []
+
+for line in entrada:
+    lines.append(line.split(','))
+    
+for line in lines:
+    for i in range(1,len(line)):
+        line[i] = int(line[i])
+
+urm = lines[0][1:]
+wrm = lines[1][1:]
+
+del line
+del lines
+del entrada
+del i
 
 
