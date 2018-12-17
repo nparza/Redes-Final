@@ -46,9 +46,31 @@ Los clusters con infomap se hicieron al grafo TOTAL dirigido
 '''
 
 #%%
+'''
+CARGO GRAFO REPOS UNDIRECTED FILTRADO
+El filtro consta:
+    -Nodos con atributos
+    -Enlaces con un peso superior a 0.002 (Ver tresh seleccionado en repos-filter.py)
+    -Componente gigante del grafo
+reposCG
+'''
+
+reposCG = ig.Graph()
+reposCG = reposCG.Read_Pickle('reposCG.pickle')
 
 
+#%%
 
+''' 
+CALCULO CLUSTERS CON FAST GREEDY
+reposcom creo que es una lista de listas donde cada lista es una comunidad 
+'''
+reposcom = reposCG.community_fastgreedy(weights=None)
+
+'''
+Ir a savecsv.py y guardar!
+Los clusters con ifastgreedy se hicieron a la componente gigante del grafo no dirigido
+'''
 
 #%%
 
